@@ -10,7 +10,7 @@ class AppController {
     try {
       const users = await dbClient.nbUsers();
       const files = await dbClient.nbFiles();
-      res.status(200).send({ users, files });
+      res.status(200).json({ users, files });
     } catch (error) {
       res.status(500).send({ error: 'Internal Server Error' });
     }
