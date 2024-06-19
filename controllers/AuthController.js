@@ -38,7 +38,7 @@ class AuthController {
     } else {
       await redisClient.del(key);
 
-      res.status(204).json({});
+      res.status(204).send();
     }
   }
 
