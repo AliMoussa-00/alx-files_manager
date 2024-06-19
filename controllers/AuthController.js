@@ -29,32 +29,32 @@ class AuthController {
   }
 
   static async getDisconnect(req, res) {
-    const token = req.headers['x-token'];
-    const key = `auth_${token}`;
+    // const token = req.headers['x-token'];
+    // const key = `auth_${token}`;
 
-    const userId = await redisClient.get(key);
-    if (!userId) {
-      res.status(401).json({ error: 'Unauthorized' });
-    } else {
-      await redisClient.del(key);
+    // const userId = await redisClient.get(key);
+    // if (!userId) {
+    //   res.status(401).json({ error: 'Unauthorized' });
+    // } else {
+    //   await redisClient.del(key);
 
-      res.status(204).send();
-    }
+    //   res.status(204).send();
+    // }
   }
 
   static async getMe(req, res) {
-    const token = req.headers['x-token'];
-    const key = `auth_${token}`;
+    // const token = req.headers['x-token'];
+    // const key = `auth_${token}`;
 
-    const userId = await redisClient.get(key);
-    if (!userId) {
-      res.status(401).json({ error: 'Unauthorized' });
-    } else {
-      const userCollection = await dbClient.db.collection('users');
-      const user = await userCollection.findOne({ _id: new ObjectId(userId) });
+    // const userId = await redisClient.get(key);
+    // if (!userId) {
+    //   res.status(401).json({ error: 'Unauthorized' });
+    // } else {
+    //   const userCollection = await dbClient.db.collection('users');
+    //   const user = await userCollection.findOne({ _id: new ObjectId(userId) });
 
-      res.json({ id: userId, email: user.email });
-    }
+    //   res.json({ id: userId, email: user.email });
+    // }
   }
 }
 
