@@ -12,5 +12,6 @@
 `$ sudo systemctl start mongod`
 
 `$ echo 'db.users.find()' | mongosh files_manager`
+`$ echo 'db.files.find()' | mongosh files_manager`
 
 b224839b-e83c-4b3b-8869-6d7114bcb677
