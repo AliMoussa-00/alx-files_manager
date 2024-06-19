@@ -10,3 +10,5 @@
 [view my README](https://github.com/AliMoussa-00/alx-backend-storage/tree/main/0x01-NoSQL)
 
 `$ sudo systemctl start mongod`
+
+`$ echo 'db.users.find()' | mongosh files_manager`
