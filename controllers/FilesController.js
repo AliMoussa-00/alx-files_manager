@@ -96,7 +96,9 @@ class FilesController {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
-    const file = await filesCollection.findOne({ _id: new ObjectId(fileId), userId });
+    const file = await filesCollection.findOne({
+      _id: new ObjectId(fileId), userId: new ObjectId(userId),
+    });
     if (!file) {
       return res.status(404).json({ error: 'Not found' });
     }
@@ -131,7 +133,7 @@ class FilesController {
     const pageNumber = parseInt(page, 10);
     const pageSize = 20;
 
-    const query = { userId, parentId: parentId !== '0' ? parentId : 0 };
+    const query = { userId: new ObjectId(userId), parentId: parentId !== '0' ? parentId : 0 };
     const pipeline = [
       { $match: query },
       { $skip: pageNumber * pageSize },
@@ -141,7 +143,7 @@ class FilesController {
     pipeline.push({
       $project: {
         _id: 0,
-        id: { $toString: '$_id' }, // Convert ObjectId to string
+        id: '$_id',
         userId: 1,
         name: 1,
         type: 1,
