@@ -1,9 +1,9 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import sinon from 'sinon';
-import AppController from '../../controllers/AppController';
-import dbClient from '../../utils/db';
-import redisClient from '../../utils/redis';
+import AppController from '../controllers/AppController';
+import dbClient from '../utils/db';
+import redisClient from '../utils/redis';
 
 const { expect } = chai;
 chai.use(chaiHttp);
