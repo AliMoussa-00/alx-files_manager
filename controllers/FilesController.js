@@ -131,7 +131,7 @@ class FilesController {
     const pageNumber = parseInt(page, 10);
     const pageSize = 20;
 
-    const query = { userId, parentId };
+    const query = { userId, parentId: parentId !== '0' ? parentId : 0 };
     const pipeline = [
       { $match: query },
       { $skip: pageNumber * pageSize },
