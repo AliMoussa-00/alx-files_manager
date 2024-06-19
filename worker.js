@@ -35,7 +35,7 @@ fileQueue.process(async (job, done) => {
   const filesCollection = dbClient.db.collection('files');
 
   const file = await filesCollection.findOne({
-    _id: new ObjectId(fileId), userId: new ObjectId(userId),
+    _id: new ObjectId(fileId), userId,
   });
 
   if (!file) {
