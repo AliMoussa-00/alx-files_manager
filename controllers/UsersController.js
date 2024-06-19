@@ -1,5 +1,8 @@
+import Queue from 'bull';
 import sha1 from 'sha1';
 import dbClient from '../utils/db';
+
+const userQueue = new Queue('userQueue');
 
 class UsersController {
   static async postNew(req, res) {
@@ -18,6 +21,7 @@ class UsersController {
       } else {
         const result = await usersCollection.insertOne({ email, password: sha1(password) });
 
+        await userQueue.add({ userId: result.insertedId });
         res.status(201).json({ id: result.insertedId, email });
       }
     }
