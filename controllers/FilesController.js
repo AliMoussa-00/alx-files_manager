@@ -100,7 +100,7 @@ class FilesController {
     let file;
     try {
       file = await filesCollection.findOne({
-        _id: new ObjectId(fileId), userId,
+        _id: new ObjectId(fileId), userId: new ObjectId(userId),
       });
     } catch (err) {
       return res.status(404).json({ error: 'Not found' });
@@ -141,7 +141,7 @@ class FilesController {
     const pageNumber = parseInt(page, 10);
     const pageSize = 20;
 
-    const query = { userId };
+    const query = { userId: new ObjectId(userId) };
     if (parentId !== '0') {
       try {
         query.parentId = new ObjectId(parentId);
@@ -200,7 +200,7 @@ class FilesController {
     let file;
     try {
       file = await filesCollection.findOne({
-        _id: new ObjectId(fileId), userId,
+        _id: new ObjectId(fileId), userId: new ObjectId(userId),
       });
     } catch (err) {
       return res.status(404).json({ error: 'Not found' });
@@ -248,7 +248,7 @@ class FilesController {
     let file;
     try {
       file = await filesCollection.findOne({
-        _id: new ObjectId(fileId), userId,
+        _id: new ObjectId(fileId), userId: new ObjectId(userId),
       });
     } catch (err) {
       return res.status(404).json({ error: 'Not found' });
