@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import sha1 from 'sha1';
 import { v4 as uuidv4 } from 'uuid';
 import dbClient from '../utils/db';
@@ -22,15 +23,39 @@ class AuthController {
 
         res.status(200).json({ token: uuid });
       }
-    }
-    else {
+    } else {
       res.status(500).json({ error: 'no authorization header' });
     }
   }
 
-  static getDisconnect(req, res) {}
+  static async getDisconnect(req, res) {
+    const token = req.headers['x-token'];
+    const key = `auth_${token}`;
 
-  static getMe(req, res) {}
+    const userId = await redisClient.get(key);
+    if (!userId) {
+      res.status(401).json({ error: 'Unauthorized' });
+    } else {
+      await redisClient.del(key);
+
+      res.status(204).json({});
+    }
+  }
+
+  static async getMe(req, res) {
+    const token = req.headers['x-token'];
+    const key = `auth_${token}`;
+
+    const userId = await redisClient.get(key);
+    if (!userId) {
+      res.status(401).json({ error: 'Unauthorized' });
+    } else {
+      const userCollection = await dbClient.db.collection('users');
+      const user = await userCollection.findOne({ _id: new ObjectId(userId) });
+
+      res.json({ id: userId, email: user.email });
+    }
+  }
 }
 
 export default AuthController;
