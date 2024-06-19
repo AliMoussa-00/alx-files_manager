@@ -9,6 +9,10 @@ class FilesController {
   static async postUpload(req, res) {
     const token = req.headers['x-token'];
     const userId = await redisClient.get(`auth_${token}`);
+    if (!userId) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
     const userCollection = dbClient.db.collection('users');
     const filesCollection = dbClient.db.collection('files');
 
@@ -70,7 +74,7 @@ class FilesController {
 
     fileDocument.localPath = localPath;
     const result = await filesCollection.insertOne(fileDocument);
-    return res.json({
+    return res.status(201).json({
       id: result.insertedId, userId, name, type, isPublic, parentId,
     });
   }
